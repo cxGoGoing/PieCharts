@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4824E88E3EA11F4D3CFC5FEE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA62E70ED21D25AB38FCA890 /* libPods.a */; };
+		579F4A381CDB43EA00D50A3A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 579F4A371CDB43EA00D50A3A /* HomeViewController.m */; };
+		579F4A3D1CDB45D500D50A3A /* LogUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 579F4A3C1CDB45D500D50A3A /* LogUtil.m */; };
 		57E31F891CDB429A0084FA78 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E31F881CDB429A0084FA78 /* main.m */; };
 		57E31F8C1CDB429A0084FA78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E31F8B1CDB429A0084FA78 /* AppDelegate.m */; };
 		57E31F8E1CDB429A0084FA78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57E31F8D1CDB429A0084FA78 /* Assets.xcassets */; };
@@ -35,6 +37,11 @@
 
 /* Begin PBXFileReference section */
 		4FAAF916012EABC3419D0DA6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		579F4A361CDB43EA00D50A3A /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		579F4A371CDB43EA00D50A3A /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		579F4A391CDB43FB00D50A3A /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		579F4A3B1CDB45D500D50A3A /* LogUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogUtil.h; sourceTree = "<group>"; };
+		579F4A3C1CDB45D500D50A3A /* LogUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogUtil.m; sourceTree = "<group>"; };
 		57E31F841CDB429A0084FA78 /* Charts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Charts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57E31F881CDB429A0084FA78 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		57E31F8A1CDB429A0084FA78 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -88,8 +95,19 @@
 		579F4A351CDB43C000D50A3A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				579F4A361CDB43EA00D50A3A /* HomeViewController.h */,
+				579F4A371CDB43EA00D50A3A /* HomeViewController.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		579F4A3A1CDB45CF00D50A3A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				579F4A3B1CDB45D500D50A3A /* LogUtil.h */,
+				579F4A3C1CDB45D500D50A3A /* LogUtil.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		57E31F7B1CDB429A0084FA78 = {
@@ -117,6 +135,7 @@
 		57E31F861CDB429A0084FA78 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
+				579F4A3A1CDB45CF00D50A3A /* Utils */,
 				579F4A351CDB43C000D50A3A /* Controllers */,
 				579F4A341CDB43B200D50A3A /* Views */,
 				57E31F8A1CDB429A0084FA78 /* AppDelegate.h */,
@@ -133,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				57E31F881CDB429A0084FA78 /* main.m */,
+				579F4A391CDB43FB00D50A3A /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -352,8 +372,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				579F4A3D1CDB45D500D50A3A /* LogUtil.m in Sources */,
 				57E31F8C1CDB429A0084FA78 /* AppDelegate.m in Sources */,
 				57E31F891CDB429A0084FA78 /* main.m in Sources */,
+				579F4A381CDB43EA00D50A3A /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +507,7 @@
 			baseConfigurationReference = 4FAAF916012EABC3419D0DA6 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = Charts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiaoshouyi.com.Charts;
@@ -497,6 +520,7 @@
 			baseConfigurationReference = F18CE7F3EEE6369A0F790A14 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/PrefixHeader.pch";
 				INFOPLIST_FILE = Charts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xiaoshouyi.com.Charts;
