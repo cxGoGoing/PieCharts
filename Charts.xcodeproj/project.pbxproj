@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4824E88E3EA11F4D3CFC5FEE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA62E70ED21D25AB38FCA890 /* libPods.a */; };
+		5743B3FE1CE029D900E45EAD /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5743B3FD1CE029D900E45EAD /* PieChartView.m */; };
+		5743B4021CE02A0200E45EAD /* ChartItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5743B4011CE02A0200E45EAD /* ChartItemModel.m */; };
 		579F4A381CDB43EA00D50A3A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 579F4A371CDB43EA00D50A3A /* HomeViewController.m */; };
 		579F4A3D1CDB45D500D50A3A /* LogUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 579F4A3C1CDB45D500D50A3A /* LogUtil.m */; };
 		57E31F891CDB429A0084FA78 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E31F881CDB429A0084FA78 /* main.m */; };
@@ -37,6 +39,10 @@
 
 /* Begin PBXFileReference section */
 		4FAAF916012EABC3419D0DA6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5743B3FC1CE029D900E45EAD /* PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartView.h; sourceTree = "<group>"; };
+		5743B3FD1CE029D900E45EAD /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartView.m; sourceTree = "<group>"; };
+		5743B4001CE02A0200E45EAD /* ChartItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartItemModel.h; sourceTree = "<group>"; };
+		5743B4011CE02A0200E45EAD /* ChartItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartItemModel.m; sourceTree = "<group>"; };
 		579F4A361CDB43EA00D50A3A /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		579F4A371CDB43EA00D50A3A /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		579F4A391CDB43FB00D50A3A /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -85,9 +91,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5743B3FF1CE029E400E45EAD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5743B4001CE02A0200E45EAD /* ChartItemModel.h */,
+				5743B4011CE02A0200E45EAD /* ChartItemModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		579F4A341CDB43B200D50A3A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5743B3FC1CE029D900E45EAD /* PieChartView.h */,
+				5743B3FD1CE029D900E45EAD /* PieChartView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -135,6 +152,7 @@
 		57E31F861CDB429A0084FA78 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
+				5743B3FF1CE029E400E45EAD /* Models */,
 				579F4A3A1CDB45CF00D50A3A /* Utils */,
 				579F4A351CDB43C000D50A3A /* Controllers */,
 				579F4A341CDB43B200D50A3A /* Views */,
@@ -376,6 +394,8 @@
 				57E31F8C1CDB429A0084FA78 /* AppDelegate.m in Sources */,
 				57E31F891CDB429A0084FA78 /* main.m in Sources */,
 				579F4A381CDB43EA00D50A3A /* HomeViewController.m in Sources */,
+				5743B3FE1CE029D900E45EAD /* PieChartView.m in Sources */,
+				5743B4021CE02A0200E45EAD /* ChartItemModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
