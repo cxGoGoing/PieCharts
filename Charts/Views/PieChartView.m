@@ -16,6 +16,7 @@
 @property (nonatomic, strong) CAShapeLayer* sectionHightLight;
 @property (nonatomic, strong) NSMutableDictionary* selectedItems;
 @property (nonatomic, strong) NSMutableArray* descriptionLabels;
+@property (nonatomic, strong) UICollectionView* collectionView;
 
 - (UILabel*)descriptionLabelForItemAtIndex:(NSUInteger)index;
 - (CGFloat)startPercentageForItemAtIndex:(NSUInteger)index;
@@ -148,6 +149,7 @@
 
     _pieLayer = [CAShapeLayer layer];
     [_contentView.layer addSublayer:_pieLayer];
+    
 }
 
 #pragma mark getter and setter
@@ -268,25 +270,24 @@
     CGFloat percentage = [self findPercentageOfAngleInCircle:circleCenter fromPoint:touchLocation];
     int index = 0;
     while (percentage > [self endPercentageForItemAtIndex:index]) {
-        index ++;
+        index++;
     }
     if ([self.delegate respondsToSelector:@selector(userClickedOnPieIndexItem:)]) {
         [self.delegate userClickedOnPieIndexItem:index];
     }
-    if(self.sectionHightLight){
+    if (self.sectionHightLight) {
         [self.sectionHightLight removeFromSuperlayer];
     }
-    ChartItemModel *currentItem = [self dataItemForIndex:index];
+    ChartItemModel* currentItem = [self dataItemForIndex:index];
     CGFloat startPercentage = [self startPercentageForItemAtIndex:index];
-    CGFloat endPercentage   = [self endPercentageForItemAtIndex:index];
-    self.sectionHightLight= [self newCircleLayerWithRadius:_outterCircleRadius
-                                              borderWidth:20
-                                                fillColor:[UIColor clearColor]
-                                              borderColor:currentItem.color
-                                          startPercentage:startPercentage
-                                            endPercentage:endPercentage];
+    CGFloat endPercentage = [self endPercentageForItemAtIndex:index];
+    self.sectionHightLight = [self newCircleLayerWithRadius:_outterCircleRadius
+                                                borderWidth:20
+                                                  fillColor:[UIColor clearColor]
+                                                borderColor:currentItem.color
+                                            startPercentage:startPercentage
+                                              endPercentage:endPercentage];
     [_contentView.layer addSublayer:self.sectionHightLight];
-
 }
 
 - (CGFloat)findPercentageOfAngleInCircle:(CGPoint)center fromPoint:(CGPoint)reference

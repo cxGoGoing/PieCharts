@@ -19,6 +19,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     NSArray* items = @[
         [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieBlueColor]],
         [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieRedColor]],
