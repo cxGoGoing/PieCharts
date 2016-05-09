@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface PieChartView : UIIView
+#import "ChartViewDelegate.h"
+@interface PieChartView : UIView
+- (instancetype)initWithFrame:(CGRect)frame items:(NSArray *)items;
+@property (nonatomic, readonly,strong) NSArray	*items;
+@property (nonatomic,assign)CGFloat outterCircleRadius;
+@property (nonatomic,assign)CGFloat innerCircleRadius;
 
 @end
