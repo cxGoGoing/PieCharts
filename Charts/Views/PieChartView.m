@@ -30,23 +30,25 @@
                             endPercentage:(CGFloat)endPercentage;
 @end
 @implementation PieChartView
+
 #pragma mark public method
-- (void)strokeChart{
+
+- (void)strokeChart
+{
     [self loadDefault];
     [self recompute];
 
-    ChartItemModel *currentItem;
+    ChartItemModel* currentItem;
     for (int i = 0; i < _items.count; i++) {
         currentItem = [self dataItemForIndex:i];
 
-
         CGFloat startPercentage = [self startPercentageForItemAtIndex:i];
-        CGFloat endPercentage   = [self endPercentageForItemAtIndex:i];
+        CGFloat endPercentage = [self endPercentageForItemAtIndex:i];
 
         CGFloat radius = _innerCircleRadius + (_outterCircleRadius - _innerCircleRadius) / 2;
         CGFloat borderWidth = _outterCircleRadius - _innerCircleRadius;
 
-        CAShapeLayer *currentPieLayer =	[self newCircleLayerWithRadius:radius
+        CAShapeLayer* currentPieLayer = [self newCircleLayerWithRadius:radius
                                                            borderWidth:borderWidth
                                                              fillColor:[UIColor clearColor]
                                                            borderColor:currentItem.color
@@ -58,31 +60,33 @@
     [self maskChart];
 
     for (int i = 0; i < _items.count; i++) {
-        UILabel *descriptionLabel =  [self descriptionLabelForItemAtIndex:i];
+        UILabel* descriptionLabel = [self descriptionLabelForItemAtIndex:i];
         [_contentView addSubview:descriptionLabel];
         [_descriptionLabels addObject:descriptionLabel];
     }
     [self addAnimation];
-    [_descriptionLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [_descriptionLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
         [obj setAlpha:1];
     }];
 }
 
-- (void)addAnimation{
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animation.duration  = _duration;
+- (void)addAnimation
+{
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    animation.duration = _duration;
     animation.fromValue = @0;
-    animation.toValue   = @1;
-    animation.delegate  = self;
+    animation.toValue = @1;
+    animation.delegate = self;
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     animation.removedOnCompletion = YES;
     [_pieLayer.mask addAnimation:animation forKey:@"circleAnimation"];
 }
 
-- (void)maskChart{
+- (void)maskChart
+{
     CGFloat radius = _innerCircleRadius + (_outterCircleRadius - _innerCircleRadius) / 2;
     CGFloat borderWidth = _outterCircleRadius - _innerCircleRadius;
-    CAShapeLayer *maskLayer = [self newCircleLayerWithRadius:radius
+    CAShapeLayer* maskLayer = [self newCircleLayerWithRadius:radius
                                                  borderWidth:borderWidth
                                                    fillColor:[UIColor clearColor]
                                                  borderColor:[UIColor blackColor]
@@ -90,7 +94,6 @@
                                                endPercentage:1];
 
     _pieLayer.mask = maskLayer;
-
 }
 
 #pragma mark private method
@@ -199,54 +202,54 @@
     return circle;
 }
 
-- (UILabel *)descriptionLabelForItemAtIndex:(NSUInteger)index{
-    ChartItemModel *currentDataItem = [self dataItemForIndex:index];
+- (UILabel*)descriptionLabelForItemAtIndex:(NSUInteger)index
+{
+    ChartItemModel* currentDataItem = [self dataItemForIndex:index];
     CGFloat distance = _innerCircleRadius + (_outterCircleRadius - _innerCircleRadius) / 2;
-    CGFloat centerPercentage = ([self startPercentageForItemAtIndex:index] + [self endPercentageForItemAtIndex:index])/ 2;
+    CGFloat centerPercentage = ([self startPercentageForItemAtIndex:index] + [self endPercentageForItemAtIndex:index]) / 2;
     CGFloat rad = centerPercentage * 2 * M_PI;
 
-    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+    UILabel* descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
     //NSString * titleText = currentDataItem.textDescription;
-    NSString * titleValue;
-    if(self.showAbsoluteValues){
-        titleValue = [NSString stringWithFormat:@"%.0f",currentDataItem.value];
-    }else{
-        titleValue = [NSString stringWithFormat:@"%.0f%%",[self ratioForItemAtIndex:index]*100];
+    NSString* titleValue;
+    if (self.showAbsoluteValues) {
+        titleValue = [NSString stringWithFormat:@"%.0f", currentDataItem.value];
+    }
+    else {
+        titleValue = [NSString stringWithFormat:@"%.0f%%", [self ratioForItemAtIndex:index] * 100];
     }
     descriptionLabel.text = titleValue;
 
-    if ([self ratioForItemAtIndex:index] < self.labelPercentageCutoff )
-    {
+    if ([self ratioForItemAtIndex:index] < self.labelPercentageCutoff) {
         descriptionLabel.text = nil;
     }
 
     CGPoint center = CGPointMake(_outterCircleRadius + distance * sin(rad),
-                                 _outterCircleRadius - distance * cos(rad));
+        _outterCircleRadius - distance * cos(rad));
 
     descriptionLabel.font = _descriptionTextFont;
-    CGSize labelSize = [descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:descriptionLabel.font}];
+    CGSize labelSize = [descriptionLabel.text sizeWithAttributes:@{ NSFontAttributeName : descriptionLabel.font }];
     descriptionLabel.frame = CGRectMake(descriptionLabel.frame.origin.x, descriptionLabel.frame.origin.y,
-                                        descriptionLabel.frame.size.width, labelSize.height);
-    descriptionLabel.numberOfLines   = 0;
-    descriptionLabel.textColor       = _descriptionTextColor;
-    descriptionLabel.shadowColor     = _descriptionTextShadowColor;
-    descriptionLabel.shadowOffset    = _descriptionTextShadowOffset;
-    descriptionLabel.textAlignment   = NSTextAlignmentCenter;
-    descriptionLabel.center          = center;
-    descriptionLabel.alpha           = 0;
+        descriptionLabel.frame.size.width, labelSize.height);
+    descriptionLabel.numberOfLines = 0;
+    descriptionLabel.textColor = _descriptionTextColor;
+    descriptionLabel.shadowColor = _descriptionTextShadowColor;
+    descriptionLabel.shadowOffset = _descriptionTextShadowOffset;
+    descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    descriptionLabel.center = center;
+    descriptionLabel.alpha = 0;
     descriptionLabel.backgroundColor = [UIColor clearColor];
     return descriptionLabel;
 }
 
-- (void)recompute{
-
+- (void)recompute
+{
 }
 
-- (void)updateChartData:(NSArray *)items{
+- (void)updateChartData:(NSArray*)items
+{
     self.items = items;
 }
-
-
 
 #pragma mark actions
 
@@ -261,6 +264,34 @@
         [self.sectionHightLight removeFromSuperlayer];
         return;
     }
+
+    CGFloat percentage = [self findPercentageOfAngleInCircle:circleCenter fromPoint:touchLocation];
+    int index = 0;
+    while (percentage > [self endPercentageForItemAtIndex:index]) {
+        index ++;
+    }
+    if ([self.delegate respondsToSelector:@selector(userClickedOnPieIndexItem:)]) {
+        [self.delegate userClickedOnPieIndexItem:index];
+    }
+    ChartItemModel *currentItem = [self dataItemForIndex:index];
+    CGFloat startPercentage = [self startPercentageForItemAtIndex:index];
+    CGFloat endPercentage   = [self endPercentageForItemAtIndex:index];
+    self.sectionHightLight= [self newCircleLayerWithRadius:_outterCircleRadius
+                                              borderWidth:10
+                                                fillColor:[UIColor clearColor]
+                                              borderColor:currentItem.color
+                                          startPercentage:startPercentage
+                                            endPercentage:endPercentage];
+    [_contentView.layer addSublayer:self.sectionHightLight];
+
+}
+
+- (CGFloat)findPercentageOfAngleInCircle:(CGPoint)center fromPoint:(CGPoint)reference
+{
+    //Find angle of line Passing In Reference And Center
+    CGFloat angleOfLine = atanf((reference.y - center.y) / (reference.x - center.x));
+    CGFloat percentage = (angleOfLine + M_PI / 2) / (2 * M_PI);
+    return (reference.x - center.x) > 0 ? percentage : percentage + .5;
 }
 
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
