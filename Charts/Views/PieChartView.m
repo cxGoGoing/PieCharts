@@ -33,7 +33,7 @@
 #pragma mark public method
 - (void)strokeChart{
     [self loadDefault];
-    //[self recompute];
+    [self recompute];
 
     ChartItemModel *currentItem;
     for (int i = 0; i < _items.count; i++) {
@@ -63,6 +63,9 @@
         [_descriptionLabels addObject:descriptionLabel];
     }
     [self addAnimation];
+    [_descriptionLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [obj setAlpha:1];
+    }];
 }
 
 - (void)addAnimation{

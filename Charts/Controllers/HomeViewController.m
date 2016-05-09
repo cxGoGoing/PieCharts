@@ -10,7 +10,7 @@
 #import "PieChartView.h"
 #import "ColorUtil.h"
 #import "ChartItemModel.h"
-@interface HomeViewController ()<ChartViewDelegate>
+@interface HomeViewController () <ChartViewDelegate>
 
 @end
 
@@ -31,8 +31,8 @@
     PieChartView* pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(width / 2.0 - 100, 100, 200.0, 200.0) items:items];
     //pieChart.labelPercentageCutoff = 5.f;
     pieChart.descriptionTextShadowColor = [UIColor clearColor];
-    [pieChart strokeChart];
     pieChart.delegate = self;
+    [pieChart strokeChart];
     [self.view addSubview:pieChart];
 
     // Do any additional setup after loading the view.
