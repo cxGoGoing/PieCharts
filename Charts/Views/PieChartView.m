@@ -9,12 +9,13 @@
 #import "PieChartView.h"
 #import "ChartItemModel.h"
 @interface PieChartView ()
-@property (nonatomic, copy) NSArray* items;
-@property (nonatomic, copy) NSArray* endPercentages;
-@property (nonatomic, weak) UIView* contentView;
-@property (nonatomic, weak) CAShapeLayer* pieLayer;
-@property (nonatomic, weak) CAShapeLayer* sectionHightLight;
+@property (nonatomic, strong) NSArray* items;
+@property (nonatomic, strong) NSArray* endPercentages;
+@property (nonatomic, strong) UIView* contentView;
+@property (nonatomic, strong) CAShapeLayer* pieLayer;
+@property (nonatomic, strong) CAShapeLayer* sectionHightLight;
 @property (nonatomic, strong) NSMutableDictionary* selectedItems;
+@property (nonatomic, strong) NSMutableArray* descriptionLabels;
 
 - (UILabel*)descriptionLabelForItemAtIndex:(NSUInteger)index;
 - (CGFloat)startPercentageForItemAtIndex:(NSUInteger)index;
@@ -29,7 +30,67 @@
                             endPercentage:(CGFloat)endPercentage;
 @end
 @implementation PieChartView
+#pragma mark public method
+- (void)strokeChart{
+    [self loadDefault];
+    [self recompute];
 
+    ChartItemModel *currentItem;
+    for (int i = 0; i < _items.count; i++) {
+        currentItem = [self dataItemForIndex:i];
+
+
+        CGFloat startPercentage = [self startPercentageForItemAtIndex:i];
+        CGFloat endPercentage   = [self endPercentageForItemAtIndex:i];
+
+        CGFloat radius = _innerCircleRadius + (_outterCircleRadius - _innerCircleRadius) / 2;
+        CGFloat borderWidth = _outterCircleRadius - _innerCircleRadius;
+
+        CAShapeLayer *currentPieLayer =	[self newCircleLayerWithRadius:radius
+                                                           borderWidth:borderWidth
+                                                             fillColor:[UIColor clearColor]
+                                                           borderColor:currentItem.color
+                                                       startPercentage:startPercentage
+                                                         endPercentage:endPercentage];
+        [_pieLayer addSublayer:currentPieLayer];
+    }
+
+    [self maskChart];
+
+    for (int i = 0; i < _items.count; i++) {
+        UILabel *descriptionLabel =  [self descriptionLabelForItemAtIndex:i];
+        [_contentView addSubview:descriptionLabel];
+        [_descriptionLabels addObject:descriptionLabel];
+    }
+    [self addAnimation];
+}
+
+- (void)addAnimation{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    animation.duration  = _duration;
+    animation.fromValue = @0;
+    animation.toValue   = @1;
+    animation.delegate  = self;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.removedOnCompletion = YES;
+    [_pieLayer.mask addAnimation:animation forKey:@"circleAnimation"];
+}
+
+- (void)maskChart{
+    CGFloat radius = _innerCircleRadius + (_outterCircleRadius - _innerCircleRadius) / 2;
+    CGFloat borderWidth = _outterCircleRadius - _innerCircleRadius;
+    CAShapeLayer *maskLayer = [self newCircleLayerWithRadius:radius
+                                                 borderWidth:borderWidth
+                                                   fillColor:[UIColor clearColor]
+                                                 borderColor:[UIColor blackColor]
+                                             startPercentage:0
+                                               endPercentage:1];
+
+    _pieLayer.mask = maskLayer;
+
+}
+
+#pragma mark private method
 - (id)initWithFrame:(CGRect)frame items:(NSArray*)items
 {
     self = [self initWithFrame:frame];
@@ -48,7 +109,39 @@
 
 - (void)baseInit
 {
-    
+    _selectedItems = [NSMutableDictionary dictionary];
+    _outterCircleRadius = CGRectGetWidth(self.bounds) / 2;
+    _innerCircleRadius = CGRectGetWidth(self.bounds) / 6;
+    _descriptionTextFont = [UIFont systemFontOfSize:18];
+    _descriptionTextColor = [UIColor whiteColor];
+    _descriptionTextShadowColor = [UIColor blackColor];
+    _descriptionTextShadowOffset = CGSizeMake(0, 1);
+    _duration = 1.0;
+    [self loadDefault];
+}
+
+- (void)loadDefault
+{
+    __block CGFloat currentTotal = 0;
+    CGFloat total = [[self.items valueForKeyPath:@"@sum.value"] floatValue];
+    NSMutableArray* endPercentages = [NSMutableArray new];
+    [_items enumerateObjectsUsingBlock:^(ChartItemModel* item, NSUInteger idx, BOOL* stop) {
+        if (total == 0){
+            [endPercentages addObject:@(1.0 / _items.count * (idx + 1))];
+        }else{
+            currentTotal += item.value;
+            [endPercentages addObject:@(currentTotal / total)];
+        }
+    }];
+    self.endPercentages = [endPercentages copy];
+
+    [_contentView removeFromSuperview];
+    _contentView = [[UIView alloc] initWithFrame:self.bounds];
+    [self addSubview:_contentView];
+    _descriptionLabels = [NSMutableArray new];
+
+    _pieLayer = [CAShapeLayer layer];
+    [_contentView.layer addSublayer:_pieLayer];
 }
 
 #pragma mark getter and setter
