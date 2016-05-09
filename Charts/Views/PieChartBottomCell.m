@@ -25,6 +25,7 @@
 - (UIImageView*)titleImageView{
     if(!_titleImageView){
         _titleImageView = [[UIImageView alloc]init];
+        [self.contentView addSubview:_titleImageView];
     }
     return _titleImageView;
 }
@@ -32,16 +33,22 @@
 - (UILabel*)titleLabel{
     if(!_titleLabel){
         _titleLabel = [[UILabel alloc]init];
+        [self.contentView addSubview:_titleLabel];
     }
     return _titleLabel;
 }
 
 - (void)setUpUI{
+    [self.titleImageView autoSetDimensionsToSize:CGSizeMake(20, 20)];
+    [self.titleImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.titleImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+
     
 }
 
 - (void)setModel:(ChartItemModel *)model{
     _model = model;
+    self.titleImageView.backgroundColor = model.color;
 }
 
 @end

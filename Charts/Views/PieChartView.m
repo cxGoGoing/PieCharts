@@ -165,6 +165,9 @@
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        layout.itemSize = CGSizeMake(50, _collectionView.bounds.size.height);
+        layout.minimumInteritemSpacing = 10;
+        _collectionView.showsHorizontalScrollIndicator = NO;
         [_collectionView registerClass:[PieChartBottomCell class] forCellWithReuseIdentifier:[PieChartBottomCell cellIdentifer]];
 
     }
@@ -285,12 +288,14 @@
         [self.sectionHightLight removeFromSuperlayer];
         return;
     }
-
     CGFloat percentage = [self findPercentageOfAngleInCircle:circleCenter fromPoint:touchLocation];
     int index = 0;
     while (percentage > [self endPercentageForItemAtIndex:index]) {
         index++;
     }
+    [self didSelectPieChart:index];
+}
+- (void)didSelectPieChart:(NSInteger)index{
     if ([self.delegate respondsToSelector:@selector(userClickedOnPieIndexItem:)]) {
         [self.delegate userClickedOnPieIndexItem:index];
     }
@@ -307,6 +312,7 @@
                                             startPercentage:startPercentage
                                               endPercentage:endPercentage];
     [_contentView.layer addSublayer:self.sectionHightLight];
+
 }
 
 - (CGFloat)findPercentageOfAngleInCircle:(CGPoint)center fromPoint:(CGPoint)reference
@@ -333,6 +339,13 @@
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    PieChartBottomCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:[PieChartBottomCell cellIdentifer] forIndexPath:indexPath];
+    cell.model = self.items[indexPath.item];
+    return cell;
     
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self didSelectPieChart:indexPath.item];
 }
 @end
