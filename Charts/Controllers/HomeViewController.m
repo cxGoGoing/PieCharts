@@ -11,7 +11,7 @@
 #import "ColorUtil.h"
 #import "ChartItemModel.h"
 @interface HomeViewController () <ChartViewDelegate>
-
+@property (nonatomic,strong)PieChartView * pieChart;
 @end
 
 @implementation HomeViewController
@@ -34,8 +34,22 @@
     pieChart.delegate = self;
     [pieChart strokeChart];
     [self.view addSubview:pieChart];
+    self.pieChart = pieChart;
 
     // Do any additional setup after loading the view.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSArray* items = @[
+                       [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieBlueColor]],
+                       [ChartItemModel dataItemWithValue:20 color:[ColorUtil pieRedColor]],
+                       [ChartItemModel dataItemWithValue:30 color:[ColorUtil pieYellowColor]],
+                       [ChartItemModel dataItemWithValue:35 color:[ColorUtil pieGreenColor]],
+                       [ChartItemModel dataItemWithValue:5
+                                                   color:[ColorUtil pieDeepBlueColor]]
+                       ];
+    [self.pieChart updateChartData:items];
+    [self.pieChart strokeChart];
 }
 
 - (void)didReceiveMemoryWarning

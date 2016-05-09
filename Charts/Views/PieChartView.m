@@ -273,11 +273,14 @@
     if ([self.delegate respondsToSelector:@selector(userClickedOnPieIndexItem:)]) {
         [self.delegate userClickedOnPieIndexItem:index];
     }
+    if(self.sectionHightLight){
+        [self.sectionHightLight removeFromSuperlayer];
+    }
     ChartItemModel *currentItem = [self dataItemForIndex:index];
     CGFloat startPercentage = [self startPercentageForItemAtIndex:index];
     CGFloat endPercentage   = [self endPercentageForItemAtIndex:index];
     self.sectionHightLight= [self newCircleLayerWithRadius:_outterCircleRadius
-                                              borderWidth:10
+                                              borderWidth:20
                                                 fillColor:[UIColor clearColor]
                                               borderColor:currentItem.color
                                           startPercentage:startPercentage
