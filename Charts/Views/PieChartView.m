@@ -33,7 +33,7 @@
 #pragma mark public method
 - (void)strokeChart{
     [self loadDefault];
-    [self recompute];
+    //[self recompute];
 
     ChartItemModel *currentItem;
     for (int i = 0; i < _items.count; i++) {
@@ -111,7 +111,7 @@
 {
     _selectedItems = [NSMutableDictionary dictionary];
     _outterCircleRadius = CGRectGetWidth(self.bounds) / 2;
-    _innerCircleRadius = CGRectGetWidth(self.bounds) / 6;
+    _innerCircleRadius = CGRectGetWidth(self.bounds) / 4;
     _descriptionTextFont = [UIFont systemFontOfSize:18];
     _descriptionTextColor = [UIColor whiteColor];
     _descriptionTextShadowColor = [UIColor blackColor];
@@ -195,6 +195,55 @@
 
     return circle;
 }
+
+- (UILabel *)descriptionLabelForItemAtIndex:(NSUInteger)index{
+    ChartItemModel *currentDataItem = [self dataItemForIndex:index];
+    CGFloat distance = _innerCircleRadius + (_outterCircleRadius - _innerCircleRadius) / 2;
+    CGFloat centerPercentage = ([self startPercentageForItemAtIndex:index] + [self endPercentageForItemAtIndex:index])/ 2;
+    CGFloat rad = centerPercentage * 2 * M_PI;
+
+    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+    //NSString * titleText = currentDataItem.textDescription;
+    NSString * titleValue;
+    if(self.showAbsoluteValues){
+        titleValue = [NSString stringWithFormat:@"%.0f",currentDataItem.value];
+    }else{
+        titleValue = [NSString stringWithFormat:@"%.0f%%",[self ratioForItemAtIndex:index]*100];
+    }
+    descriptionLabel.text = titleValue;
+
+    if ([self ratioForItemAtIndex:index] < self.labelPercentageCutoff )
+    {
+        descriptionLabel.text = nil;
+    }
+
+    CGPoint center = CGPointMake(_outterCircleRadius + distance * sin(rad),
+                                 _outterCircleRadius - distance * cos(rad));
+
+    descriptionLabel.font = _descriptionTextFont;
+    CGSize labelSize = [descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:descriptionLabel.font}];
+    descriptionLabel.frame = CGRectMake(descriptionLabel.frame.origin.x, descriptionLabel.frame.origin.y,
+                                        descriptionLabel.frame.size.width, labelSize.height);
+    descriptionLabel.numberOfLines   = 0;
+    descriptionLabel.textColor       = _descriptionTextColor;
+    descriptionLabel.shadowColor     = _descriptionTextShadowColor;
+    descriptionLabel.shadowOffset    = _descriptionTextShadowOffset;
+    descriptionLabel.textAlignment   = NSTextAlignmentCenter;
+    descriptionLabel.center          = center;
+    descriptionLabel.alpha           = 0;
+    descriptionLabel.backgroundColor = [UIColor clearColor];
+    return descriptionLabel;
+}
+
+- (void)recompute{
+
+}
+
+- (void)updateChartData:(NSArray *)items{
+    self.items = items;
+}
+
+
 
 #pragma mark actions
 

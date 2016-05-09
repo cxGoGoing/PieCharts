@@ -20,6 +20,8 @@
 @property (nonatomic,assign)NSTimeInterval duration;
 @property (nonatomic, assign) CGFloat labelPercentageCutoff;
 @property (nonatomic,weak)id<ChartViewDelegate>delegate;
+@property (nonatomic,assign)BOOL  showAbsoluteValues;
+@property (nonatomic,assign)BOOL hideValues;
 
 - (void)updateChartData:(NSArray*)items;
 - (void)strokeChart;

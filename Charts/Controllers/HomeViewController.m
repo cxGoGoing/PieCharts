@@ -7,20 +7,39 @@
 //
 
 #import "HomeViewController.h"
-
-@interface HomeViewController ()
+#import "PieChartView.h"
+#import "ColorUtil.h"
+#import "ChartItemModel.h"
+@interface HomeViewController ()<ChartViewDelegate>
 
 @end
 
 @implementation HomeViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    DDLogInfo(@"12123123");
+    NSArray* items = @[
+        [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieBlueColor]],
+        [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieRedColor]],
+        [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieYellowColor]],
+        [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieGreenColor]],
+        [ChartItemModel dataItemWithValue:10
+                                    color:[ColorUtil pieDeepBlueColor]]
+    ];
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    PieChartView* pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(width / 2.0 - 100, 100, 200.0, 200.0) items:items];
+    //pieChart.labelPercentageCutoff = 5.f;
+    pieChart.descriptionTextShadowColor = [UIColor clearColor];
+    [pieChart strokeChart];
+    pieChart.delegate = self;
+    [self.view addSubview:pieChart];
+
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
