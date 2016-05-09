@@ -13,5 +13,15 @@
 @property (nonatomic, readonly,strong) NSArray	*items;
 @property (nonatomic,assign)CGFloat outterCircleRadius;
 @property (nonatomic,assign)CGFloat innerCircleRadius;
+@property (nonatomic,strong)UIFont * descriptionTextFont;
+@property (nonatomic,strong)UIColor * descriptionTextColor;
+@property (nonatomic,strong)UIColor * descriptionTextShadowColor;
+@property (nonatomic,assign)CGSize descriptionTextShadowOffset;
+@property (nonatomic,assign)NSTimeInterval duration;
+@property (nonatomic, assign) CGFloat labelPercentageCutoff;
+@property (nonatomic,weak)id<ChartViewDelegate>delegate;
 
+- (void)updateChartData:(NSArray*)items;
+- (void)strokeChart;
+- (void)recompute;
 @end
