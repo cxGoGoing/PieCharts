@@ -11,6 +11,8 @@
 		5743B4021CE02A0200E45EAD /* ChartItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5743B4011CE02A0200E45EAD /* ChartItemModel.m */; };
 		5743B4051CE02D8100E45EAD /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5743B4041CE02D8100E45EAD /* PieChartView.m */; };
 		5743B4091CE0381600E45EAD /* ColorUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 5743B4081CE0381600E45EAD /* ColorUtil.m */; };
+		5743B40F1CE0722B00E45EAD /* BaseCollecionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5743B40E1CE0722B00E45EAD /* BaseCollecionViewCell.m */; };
+		5743B4121CE0725D00E45EAD /* PieChartBottomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5743B4111CE0725D00E45EAD /* PieChartBottomCell.m */; };
 		579F4A381CDB43EA00D50A3A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 579F4A371CDB43EA00D50A3A /* HomeViewController.m */; };
 		579F4A3D1CDB45D500D50A3A /* LogUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 579F4A3C1CDB45D500D50A3A /* LogUtil.m */; };
 		57E31F891CDB429A0084FA78 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E31F881CDB429A0084FA78 /* main.m */; };
@@ -47,6 +49,10 @@
 		5743B4061CE02E2200E45EAD /* ChartViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChartViewDelegate.h; sourceTree = "<group>"; };
 		5743B4071CE0381600E45EAD /* ColorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorUtil.h; sourceTree = "<group>"; };
 		5743B4081CE0381600E45EAD /* ColorUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorUtil.m; sourceTree = "<group>"; };
+		5743B40D1CE0722B00E45EAD /* BaseCollecionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCollecionViewCell.h; sourceTree = "<group>"; };
+		5743B40E1CE0722B00E45EAD /* BaseCollecionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseCollecionViewCell.m; sourceTree = "<group>"; };
+		5743B4101CE0725D00E45EAD /* PieChartBottomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartBottomCell.h; sourceTree = "<group>"; };
+		5743B4111CE0725D00E45EAD /* PieChartBottomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartBottomCell.m; sourceTree = "<group>"; };
 		579F4A361CDB43EA00D50A3A /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		579F4A371CDB43EA00D50A3A /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		579F4A391CDB43FB00D50A3A /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -110,6 +116,10 @@
 			children = (
 				5743B4031CE02D8100E45EAD /* PieChartView.h */,
 				5743B4041CE02D8100E45EAD /* PieChartView.m */,
+				5743B40D1CE0722B00E45EAD /* BaseCollecionViewCell.h */,
+				5743B40E1CE0722B00E45EAD /* BaseCollecionViewCell.m */,
+				5743B4101CE0725D00E45EAD /* PieChartBottomCell.h */,
+				5743B4111CE0725D00E45EAD /* PieChartBottomCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -397,6 +407,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5743B4121CE0725D00E45EAD /* PieChartBottomCell.m in Sources */,
+				5743B40F1CE0722B00E45EAD /* BaseCollecionViewCell.m in Sources */,
 				579F4A3D1CDB45D500D50A3A /* LogUtil.m in Sources */,
 				57E31F8C1CDB429A0084FA78 /* AppDelegate.m in Sources */,
 				5743B4051CE02D8100E45EAD /* PieChartView.m in Sources */,

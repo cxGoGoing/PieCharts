@@ -8,7 +8,8 @@
 
 #import "PieChartView.h"
 #import "ChartItemModel.h"
-@interface PieChartView ()
+#import "PieChartBottomCell.h"
+@interface PieChartView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic, strong) NSArray* items;
 @property (nonatomic, strong) NSArray* endPercentages;
 @property (nonatomic, strong) UIView* contentView;
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) NSMutableDictionary* selectedItems;
 @property (nonatomic, strong) NSMutableArray* descriptionLabels;
 @property (nonatomic, strong) UICollectionView* collectionView;
+@property (nonatomic, assign) CGRect circleBounds;
 
 - (UILabel*)descriptionLabelForItemAtIndex:(NSUInteger)index;
 - (CGFloat)startPercentageForItemAtIndex:(NSUInteger)index;
@@ -117,8 +119,9 @@
 - (void)baseInit
 {
     _selectedItems = [NSMutableDictionary dictionary];
-    _outterCircleRadius = CGRectGetWidth(self.bounds) / 2;
-    _innerCircleRadius = CGRectGetWidth(self.bounds) / 4;
+    self.circleBounds = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width);
+    _outterCircleRadius = CGRectGetWidth(self.circleBounds) / 2;
+    _innerCircleRadius = CGRectGetWidth(self.circleBounds) / 4;
     _descriptionTextFont = [UIFont systemFontOfSize:18];
     _descriptionTextColor = [UIColor whiteColor];
     _descriptionTextShadowColor = [UIColor blackColor];
@@ -143,13 +146,29 @@
     self.endPercentages = [endPercentages copy];
 
     [_contentView removeFromSuperview];
-    _contentView = [[UIView alloc] initWithFrame:self.bounds];
+    _contentView = [[UIView alloc] initWithFrame:self.circleBounds];
     [self addSubview:_contentView];
     _descriptionLabels = [NSMutableArray new];
 
     _pieLayer = [CAShapeLayer layer];
     [_contentView.layer addSublayer:_pieLayer];
+
+    [self addSubview:self.collectionView];
     
+}
+
+- (UICollectionView*)collectionView{
+    if(!_collectionView){
+        UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc]init];
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(self.circleBounds)+20, CGRectGetWidth(self.circleBounds), self.bounds.size.height-self.circleBounds.size.height-20) collectionViewLayout:layout];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        [_collectionView registerClass:[PieChartBottomCell class] forCellWithReuseIdentifier:[PieChartBottomCell cellIdentifer]];
+
+    }
+    return _collectionView;
 }
 
 #pragma mark getter and setter
@@ -186,7 +205,7 @@
 {
     CAShapeLayer* circle = [CAShapeLayer layer];
 
-    CGPoint center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    CGPoint center = CGPointMake(CGRectGetMidX(self.circleBounds), CGRectGetMidY(self.circleBounds));
 
     UIBezierPath* path = [UIBezierPath bezierPathWithArcCenter:center
                                                         radius:radius
@@ -304,4 +323,16 @@
     [self didTouchAt:touchLocation];
 }
 
+#pragma mark collectionView Delegate and DataSource
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return self.items.count;
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
 @end

@@ -29,7 +29,7 @@
                                     color:[ColorUtil pieDeepBlueColor]]
     ];
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    PieChartView* pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(width / 2.0 - 100, 100, 200.0, 200.0) items:items];
+    PieChartView* pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(width / 2.0 - 100, 100, 200.0, 280.0) items:items];
     //pieChart.labelPercentageCutoff = 5.f;
     pieChart.descriptionTextShadowColor = [UIColor clearColor];
     pieChart.delegate = self;
