@@ -22,6 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    DDLogInfo(@"!!!!!!!!!!!!!!");
     self.view.backgroundColor = [UIColor whiteColor];
     NSArray* items = @[
         [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieBlueColor]],
@@ -68,7 +69,6 @@
     }
     return _reloadBtn;
 }
-
 
 - (void)didReceiveMemoryWarning
 {
