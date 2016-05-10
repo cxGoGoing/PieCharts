@@ -307,7 +307,7 @@
     CGFloat startPercentage = [self startPercentageForItemAtIndex:index];
     CGFloat endPercentage = [self endPercentageForItemAtIndex:index];
     self.sectionHightLight = [self newCircleLayerWithRadius:_outterCircleRadius
-                                                borderWidth:20
+                                                borderWidth:10
                                                   fillColor:[UIColor clearColor]
                                                 borderColor:currentItem.color
                                             startPercentage:startPercentage
