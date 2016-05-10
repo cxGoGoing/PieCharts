@@ -10,8 +10,11 @@
 #import "PieChartView.h"
 #import "ColorUtil.h"
 #import "ChartItemModel.h"
+#import <PureLayout.h>
+#import <BlocksKit+UIKit.h>
 @interface HomeViewController () <ChartViewDelegate>
-@property (nonatomic,strong)PieChartView * pieChart;
+@property (nonatomic, strong) PieChartView* pieChart;
+@property (nonatomic, strong) UIButton* reloadBtn;
 @end
 
 @implementation HomeViewController
@@ -37,21 +40,33 @@
     [self.view addSubview:pieChart];
     self.pieChart = pieChart;
 
+    [self.reloadBtn autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:100];
+    [self.reloadBtn autoAlignAxisToSuperviewAxis:ALAxisVertical];
+
     // Do any additional setup after loading the view.
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    NSArray* items = @[
-                       [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieBlueColor]],
-                       [ChartItemModel dataItemWithValue:20 color:[ColorUtil pieRedColor]],
-                       [ChartItemModel dataItemWithValue:30 color:[ColorUtil pieYellowColor]],
-                       [ChartItemModel dataItemWithValue:35 color:[ColorUtil pieGreenColor]],
-                       [ChartItemModel dataItemWithValue:5
-                                                   color:[ColorUtil pieDeepBlueColor]]
-                       ];
-    [self.pieChart updateChartData:items];
-    [self.pieChart strokeChart];
+- (UIButton*)reloadBtn
+{
+    if (!_reloadBtn) {
+        _reloadBtn = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        [_reloadBtn bk_addEventHandler:^(id sender) {
+            NSArray* items = @[
+                               [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieBlueColor]],
+                               [ChartItemModel dataItemWithValue:20 color:[ColorUtil pieRedColor]],
+                               [ChartItemModel dataItemWithValue:30 color:[ColorUtil pieYellowColor]],
+                               [ChartItemModel dataItemWithValue:35 color:[ColorUtil pieGreenColor]],
+                               [ChartItemModel dataItemWithValue:5
+                                                           color:[ColorUtil pieDeepBlueColor]]
+                               ];
+            [self.pieChart updateChartData:items];
+            [self.pieChart strokeChart];
+        } forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_reloadBtn];
+    }
+    return _reloadBtn;
 }
+
 
 - (void)didReceiveMemoryWarning
 {
