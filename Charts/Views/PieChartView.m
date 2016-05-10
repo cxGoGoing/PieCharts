@@ -71,6 +71,7 @@
     [_descriptionLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
         [obj setAlpha:1];
     }];
+    [self.collectionView reloadData];
 }
 
 - (void)addAnimation

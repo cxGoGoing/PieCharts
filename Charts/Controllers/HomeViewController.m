@@ -55,9 +55,11 @@
                                [ChartItemModel dataItemWithValue:10 color:[ColorUtil pieBlueColor]],
                                [ChartItemModel dataItemWithValue:20 color:[ColorUtil pieRedColor]],
                                [ChartItemModel dataItemWithValue:30 color:[ColorUtil pieYellowColor]],
-                               [ChartItemModel dataItemWithValue:35 color:[ColorUtil pieGreenColor]],
+                               [ChartItemModel dataItemWithValue:25 color:[ColorUtil pieGreenColor]],
                                [ChartItemModel dataItemWithValue:5
-                                                           color:[ColorUtil pieDeepBlueColor]]
+                                                           color:[ColorUtil pieDeepBlueColor]],
+                               [ChartItemModel dataItemWithValue:10
+                                                           color:[ColorUtil pieCyanColor]]
                                ];
             [self.pieChart updateChartData:items];
             [self.pieChart strokeChart];

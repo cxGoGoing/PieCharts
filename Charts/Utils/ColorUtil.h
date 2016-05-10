@@ -14,5 +14,6 @@
 + (UIColor*)pieYellowColor;
 + (UIColor*)pieGreenColor;
 + (UIColor*)pieDeepBlueColor;
++ (UIColor*)pieCyanColor;
 
 @end

@@ -24,4 +24,7 @@
 + (UIColor*)pieDeepBlueColor{
     return [UIColor colorWithRed:0.247  green:0.314  blue:0.706 alpha:1];
 }
++ (UIColor*)pieCyanColor{
+    return [UIColor cyanColor];
+}
 @end
